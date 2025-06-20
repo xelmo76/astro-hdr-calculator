@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore HDR Astrofotografia</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Calcolatore professionale per HDR astrofotografico - Combina stack con tempi diversi">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HDR Astro">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9IiMxYTFhMmUiIHN0cm9rZT0iIzRDQUY1MCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Im04IDggbDE2IDAgMCA4IC04IDAgMCAtOCIgZmlsbD0iIzRDQUY1MCIvPgo8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxLjUiIGZpbGw9IiNmZmYiLz4KPGJ1dHRvbiBjeD0iMjAiIGN5PSIyMCIgcj0iMS41IiBmaWxsPSIjZmZmIi8+CjwvY2lyY2xlPgo8L3N2Zz4=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9IiMxYTFhMmUiLz4KPGJ1dHRvbiBkPSJtNDAgNDAgbDEwMCAwIDAgNDAgLTQwIDAgMCAtNDAiIGZpbGw9IiM0Q0FGNTAIIC8+CjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjgiIGZpbGw9IiNmZmYiLz4KPGJ1dHRvbiBjeD0iMTIwIiBjeT0iMTIwIiByPSI4IiBmaWxsPSIjZmZmIi8+CjwvY2lyY2xlPgo8L3N2Zz4=">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkNhbGNvbGF0b3JlIEhEUiBBc3Ryb2ZvdG9ncmFmaWEiLAogICJzaG9ydF9uYW1lIjogIkhEUiBBc3RybyIsCiAgImRlc2NyaXB0aW9uIjogIkNhbGNvbGF0b3JlIHByb2Zlc3Npb25hbGUgcGVyIEhEUiBhc3Ryb2ZvdG9ncmFmaWNvIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwYzBjMGMiLAogICJ0aGVtZV9jb2xvciI6ICIjMWExYTJlIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTWpVMklpQm9aV2xuYUhROUlqSTFOaUlnZG1sbGQwSnZlRDBpTUNBd0lESTFOaUF5TlRZaUlHWnBiR3c5SW01dmJtVWlJSGh0Ykc1elBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHlNREF3TDNOMlp5SStQR0psWTNRZ2QybGtkR2c5SURJMU5pQm9aV2xuYUhROUlESTFOaUJzZVQwaE1UTkNSREUzVERJeklERXdMakV6VERJeklEZzJMalkyVERFMklESXlOUzR6TXlBeE5pQXlORGdnTVRZZ01qUTRJREUySURJME9DQXhOaUF5TkRnZ01UWmFJREUyS0VNeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBeE5pQTJOaTQyTWlBZ01EVTRJRGNpSUdacGJHdzlJaU0wUTBGR05UQWlMejVOTVRReUxqWXhJRE0yTGpZM0lHd3hNRG90TWpVM0lESTBPUzQ0TFRjekxqUkRNekUwTGpZaU1qWTFMakUxSUVNeE5TNDVJRGMyTGprd0lHa3hOaTQzT1VreE5pNDRNeUEySXVJeUxRNDBMUWdQTXpZdU5qQk5ORGczUXlaeE9UQXVOelFETHk0NElNeXVPRFVnT1RWdU1qZG5PMEYyVkVGY09HaGtYUzR4NFFRRnFFek1UZG5NREFMSU5PUXUyT0lETm5NU0JOVGpkMExqTXlaQ0I4SWpJdOEwTEJZM0QyTXlJdERqZzNMREJhT21NNWNURkNJRFJoTnlTQkJUaWRjY0FOU2xPRVJGQWZEYk5GdHdKUExLUkdPL1o4WkZGRVFVNGdOTEVORXdzVSsiLAogICAgICAic2l6ZXMiOiAiMjU2eDI1NiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXSwKICAiY2F0ZWdvcmllcyI6IFsiUGhvdG8gJiBWaWRlbyIsICJVdGlsaXRpZXMiXQp9">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #4CAF50, #2196F3, #9C27B0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .session-input {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .session-input h3 {
+            color: #2196F3;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        input[type="number"] {
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .integration-time {
+            color: #9C27B0;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(156, 39, 176, 0.1);
+            border-radius: 5px;
+        }
+        
+        .results-section {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .formula-section {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .formula-code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #4CAF50;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        
+        .steps-section {
+            background: rgba(33, 150, 243, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid #2196F3;
+        }
+        
+        .step-number {
+            color: #2196F3;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .software-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background: #4CAF50;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .weight-visualization {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .weight-bar {
+            flex: 1;
+            height: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .tips {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #FFC107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .tips h4 {
+            color: #FFC107;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 Calcolatore HDR Astrofotografia</h1>
+            <p>Guida completa per combinare stack con tempi di esposizione diversi</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="card">
+                <h2>📊 Parametri delle Sessioni</h2>
+                
+                <div class="session-input">
+                    <h3>Sessione 1 (Tempo più breve)</h3>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label>Tempo esposizione (secondi)</label>
+                            <input type="number" id="exp1" value="30" min="1">
+                        </div>
+                        <div class="input-field">
+                            <label>Numero di scatti</label>
+                            <input type="number" id="shots1" value="60" min="1">
+                        </div>
+                    </div>
+                    <div class="integration-time" id="int1">Integrazione: 30.0 minuti</div>
+                </div>
+                
+                <div class="session-input">
+                    <h3>Sessione 2 (Tempo medio)</h3>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label>Tempo esposizione (secondi)</label>
+                            <input type="number" id="exp2" value="60" min="1">
+                        </div>
+                        <div class="input-field">
+                            <label>Numero di scatti</label>
+                            <input type="number" id="shots2" value="90" min="1">
+                        </div>
+                    </div>
+                    <div class="integration-time" id="int2">Integrazione: 90.0 minuti</div>
+                </div>
+                
+                <div class="session-input">
+                    <h3>Sessione 3 (Tempo più lungo)</h3>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label>Tempo esposizione (secondi)</label>
+                            <input type="number" id="exp3" value="90" min="1">
+                        </div>
+                        <div class="input-field">
+                            <label>Numero di scatti</label>
+                            <input type="number" id="shots3" value="153" min="1">
+                        </div>
+                    </div>
+                    <div class="integration-time" id="int3">Integrazione: 229.5 minuti</div>
+                </div>
+                
+                <div class="tips">
+                    <h4>💡 Suggerimenti:</h4>
+                    <ul>
+                        <li>Tempi brevi: migliori per stelle luminose (meno saturazione)</li>
+                        <li>Tempi lunghi: migliori per nebulosità deboli (più segnale)</li>
+                        <li>Più integrazione = più peso consigliato nella formula</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>⚖️ Calcolo Pesi Automatico</h2>
+                <div id="totalIntegration">
+                    <h3>Integrazione Totale: <span id="totalTime">349.5 minuti</span></h3>
+                    <p>Percentuali per sessione:</p>
+                    <div id="percentages">
+                        <div>Sessione 1: <span id="perc1">8.6%</span></div>
+                        <div>Sessione 2: <span id="perc2">25.8%</span></div>
+                        <div>Sessione 3: <span id="perc3">65.6%</span></div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Pesi Consigliati:</h3>
+                <div class="weight-visualization" id="weightViz">
+                    <div class="weight-bar" style="background: #f44336; flex: 0.1;">10%</div>
+                    <div class="weight-bar" style="background: #ff9800; flex: 0.25;">25%</div>
+                    <div class="weight-bar" style="background: #4caf50; flex: 0.65;">65%</div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Strategie disponibili:</h4>
+                    <label><input type="radio" name="strategy" value="proportional" checked> Proporzionale all'integrazione</label><br>
+                    <label><input type="radio" name="strategy" value="conservative"> Conservativa (meno contrasto)</label><br>
+                    <label><input type="radio" name="strategy" value="aggressive"> Aggressiva (più contrasto)</label><br>
+                    <label><input type="radio" name="strategy" value="balanced"> Bilanciata</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-section">
+            <h2>🎯 Risultati e Istruzioni</h2>
+            
+            <div class="software-tabs">
+                <button class="tab-button active" onclick="showTab('siril')">Siril</button>
+                <button class="tab-button" onclick="showTab('pixinsight')">PixInsight</button>
+                <button class="tab-button" onclick="showTab('affinity')">Affinity Photo</button>
+                <button class="tab-button" onclick="showTab('photoshop')">Photoshop</button>
+            </div>
+            
+            <div class="results-grid">
+                <div class="formula-section">
+                    <h3>📐 Formula Calcolata</h3>
+                    <div class="formula-code" id="formula">I1 * 0.1 + I2 * 0.25 + I3 * 0.65</div>
+                    
+                    <h4>Alternative da provare:</h4>
+                    <div class="formula-code" id="altFormula1">I1 * 0.05 + I2 * 0.2 + I3 * 0.75</div>
+                    <div class="formula-code" id="altFormula2">I1 * 0.15 + I2 * 0.3 + I3 * 0.55</div>
+                </div>
+                
+                <div class="steps-section">
+                    <h3>📋 Processo Step-by-Step</h3>
+                    
+                    <div id="siril-steps" class="tab-content active">
+                        <div class="step">
+                            <div class="step-number">1. Preparazione</div>
+                            Assicurati che i tre stack siano nella directory di lavoro di Siril
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2. Verifica dimensioni</div>
+                            <code>load stack1.fit</code><br>
+                            <code>load stack2.fit</code><br>
+                            <code>load stack3.fit</code><br>
+                            Controlla che abbiano le stesse dimensioni
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3. Allineamento</div>
+                            Se necessario:<br>
+                            <code>register stack2.fit stack1.fit</code><br>
+                            <code>register stack3.fit stack1.fit</code>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4. Pixel Math</div>
+                            Menu: Image Processing → Composition → Pixel Math<br>
+                            Inserisci la formula calcolata sopra
+                        </div>
+                        <div class="step">
+                            <div class="step-number">5. Salvataggio</div>
+                            <code>save risultato_HDR</code>
+                        </div>
+                    </div>
+                    
+                    <div id="pixinsight-steps" class="tab-content">
+                        <div class="step">
+                            <div class="step-number">1. HDRComposition</div>
+                            Process → HDRComposition
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2. Aggiungi immagini</div>
+                            Carica i tre stack nell'ordine: breve → medio → lungo
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3. Parametri</div>
+                            • Mask smoothness: 0.7<br>
+                            • Generate mask: checked<br>
+                            • Auto stretch: checked
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4. Esecuzione</div>
+                            Clicca Apply per generare l'HDR automatico
+                        </div>
+                    </div>
+                    
+                    <div id="affinity-steps" class="tab-content">
+                        <div class="step">
+                            <div class="step-number">1. Apertura</div>
+                            Apri lo stack con più dettagli come immagine base
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2. Livelli</div>
+                            Trascina gli altri due stack come livelli
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3. Blend modes</div>
+                            Prova: Screen, Lighten, Overlay, Linear Light
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4. Opacità</div>
+                            Regola l'opacità secondo i pesi calcolati:<br>
+                            Livello 1: <span id="opacity1">10%</span><br>
+                            Livello 2: <span id="opacity2">25%</span><br>
+                            Livello 3: <span id="opacity3">65%</span>
+                        </div>
+                    </div>
+                    
+                    <div id="photoshop-steps" class="tab-content">
+                        <div class="step">
+                            <div class="step-number">1. Scripts</div>
+                            File → Scripts → Load Files into Stack
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2. Allineamento</div>
+                            Auto-align layers se necessario
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3. Blend modes</div>
+                            Sperimentare con Lighten, Screen, Linear Light
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4. Maschere</div>
+                            Creare maschere di luminosità per controllo selettivo
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateWeights() {
+            const exp1 = parseFloat(document.getElementById('exp1').value) || 0;
+            const shots1 = parseFloat(document.getElementById('shots1').value) || 0;
+            const exp2 = parseFloat(document.getElementById('exp2').value) || 0;
+            const shots2 = parseFloat(document.getElementById('shots2').value) || 0;
+            const exp3 = parseFloat(document.getElementById('exp3').value) || 0;
+            const shots3 = parseFloat(document.getElementById('shots3').value) || 0;
+            
+            const int1 = (exp1 * shots1) / 60; // minuti
+            const int2 = (exp2 * shots2) / 60;
+            const int3 = (exp3 * shots3) / 60;
+            const total = int1 + int2 + int3;
+            
+            // Aggiorna display integrazione
+            document.getElementById('int1').textContent = `Integrazione: ${int1.toFixed(1)} minuti`;
+            document.getElementById('int2').textContent = `Integrazione: ${int2.toFixed(1)} minuti`;
+            document.getElementById('int3').textContent = `Integrazione: ${int3.toFixed(1)} minuti`;
+            document.getElementById('totalTime').textContent = `${total.toFixed(1)} minuti`;
+            
+            // Calcola percentuali
+            const perc1 = (int1 / total * 100);
+            const perc2 = (int2 / total * 100);
+            const perc3 = (int3 / total * 100);
+            
+            document.getElementById('perc1').textContent = `${perc1.toFixed(1)}%`;
+            document.getElementById('perc2').textContent = `${perc2.toFixed(1)}%`;
+            document.getElementById('perc3').textContent = `${perc3.toFixed(1)}%`;
+            
+            // Calcola pesi secondo strategia
+            const strategy = document.querySelector('input[name="strategy"]:checked').value;
+            let w1, w2, w3;
+            
+            switch(strategy) {
+                case 'proportional':
+                    w1 = Math.max(0.05, perc1 / 100);
+                    w2 = Math.max(0.1, perc2 / 100);
+                    w3 = Math.max(0.3, perc3 / 100);
+                    break;
+                case 'conservative':
+                    w1 = 0.2;
+                    w2 = 0.35;
+                    w3 = 0.45;
+                    break;
+                case 'aggressive':
+                    w1 = 0.05;
+                    w2 = 0.15;
+                    w3 = 0.8;
+                    break;
+                case 'balanced':
+                    w1 = 0.15;
+                    w2 = 0.3;
+                    w3 = 0.55;
+                    break;
+            }
+            
+            // Normalizza i pesi
+            const weightSum = w1 + w2 + w3;
+            w1 /= weightSum;
+            w2 /= weightSum;
+            w3 /= weightSum;
+            
+            // Aggiorna formula
+            document.getElementById('formula').textContent = 
+                `I1 * ${w1.toFixed(2)} + I2 * ${w2.toFixed(2)} + I3 * ${w3.toFixed(2)}`;
+            
+            // Formule alternative
+            const alt1_w1 = Math.max(0.03, w1 * 0.7);
+            const alt1_w2 = Math.max(0.1, w2 * 0.8);
+            const alt1_w3 = 1 - alt1_w1 - alt1_w2;
+            
+            const alt2_w1 = Math.min(0.25, w1 * 1.5);
+            const alt2_w2 = Math.min(0.4, w2 * 1.2);
+            const alt2_w3 = 1 - alt2_w1 - alt2_w2;
+            
+            document.getElementById('altFormula1').textContent = 
+                `I1 * ${alt1_w1.toFixed(2)} + I2 * ${alt1_w2.toFixed(2)} + I3 * ${alt1_w3.toFixed(2)}`;
+            document.getElementById('altFormula2').textContent = 
+                `I1 * ${alt2_w1.toFixed(2)} + I2 * ${alt2_w2.toFixed(2)} + I3 * ${alt2_w3.toFixed(2)}`;
+            
+            // Aggiorna visualizzazione pesi
+            const weightViz = document.getElementById('weightViz');
+            weightViz.innerHTML = `
+                <div class="weight-bar" style="background: #f44336; flex: ${w1};">${(w1*100).toFixed(0)}%</div>
+                <div class="weight-bar" style="background: #ff9800; flex: ${w2};">${(w2*100).toFixed(0)}%</div>
+                <div class="weight-bar" style="background: #4caf50; flex: ${w3};">${(w3*100).toFixed(0)}%</div>
+            `;
+            
+            // Aggiorna opacità per Affinity
+            document.getElementById('opacity1').textContent = `${(w1*100).toFixed(0)}%`;
+            document.getElementById('opacity2').textContent = `${(w2*100).toFixed(0)}%`;
+            document.getElementById('opacity3').textContent = `${(w3*100).toFixed(0)}%`;
+        }
+        
+        function showTab(tabName) {
+            // Nascondi tutti i contenuti
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Rimuovi active da tutti i bottoni
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Mostra il contenuto selezionato
+            document.getElementById(tabName + '-steps').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Event listeners
+        document.getElementById('exp1').addEventListener('input', calculateWeights);
+        document.getElementById('shots1').addEventListener('input', calculateWeights);
+        document.getElementById('exp2').addEventListener('input', calculateWeights);
+        document.getElementById('shots2').addEventListener('input', calculateWeights);
+        document.getElementById('exp3').addEventListener('input', calculateWeights);
+        document.getElementById('shots3').addEventListener('input', calculateWeights);
+        
+        document.querySelectorAll('input[name="strategy"]').forEach(radio => {
+            radio.addEventListener('change', calculateWeights);
+        });
+        
+        // Calcolo iniziale
+        calculateWeights();
+        
+        // Service Worker per PWA
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'astro-hdr-v1';
+                const urlsToCache = ['/'];
+                
+                self.addEventListener('install', (event) => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then((cache) => cache.addAll(urlsToCache))
+                    );
+                });
+                
+                self.addEventListener('fetch', (event) => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then((response) => response || fetch(event.request))
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl)
+                .then(() => console.log('Service Worker registrato'))
+                .catch(() => console.log('Service Worker fallito'));
+        }
+        
+        // Pulsante di installazione PWA
+        let deferredPrompt;
+        const installButton = document.createElement('button');
+        installButton.textContent = '📱 Installa App';
+        installButton.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            transition: transform 0.3s ease;
+        `;
+        
+        installButton.addEventListener('mouseover', () => {
+            installButton.style.transform = 'scale(1.05)';
+        });
+        
+        installButton.addEventListener('mouseout', () => {
+            installButton.style.transform = 'scale(1)';
+        });
+        
+        document.body.appendChild(installButton);
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+        });
+        
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+                installButton.style.display = 'none';
+            }
+        });
+        
+        // Nascondi il pulsante quando l'app è già installata
+        window.addEventListener('appinstalled', () => {
+            installButton.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
